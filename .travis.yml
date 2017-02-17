@@ -1,22 +1,11 @@
-language: python
-python: 2.7
-env:
-    - TOX_ENV=py27-extras
-    - TOX_ENV=py27-noextras
-    - TOX_ENV=pypy-extras
-    - TOX_ENV=pypy-noextras
-    - TOX_ENV=py33-extras
-    - TOX_ENV=py33-noextras
-    - TOX_ENV=py34-extras
-    - TOX_ENV=py34-noextras
+sudo: required
 
-install:
-    - sudo apt-get install graphviz
-    - pip install tox coveralls
+services:
+  - docker
 
 script:
-    - tox -e $TOX_ENV
+  - wget -O- http://travis.debian.net/script.sh | sh -
 
-after_success:
-    - tox -e coverage-report
-    - coveralls
+branches:
+  except:
+    - /^debian\/\d/
